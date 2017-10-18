@@ -1,0 +1,11 @@
+---
+
+- name: Restart Windows agent service
+  win_service:
+    name: "{{ te_axon_service_name }}"
+    state: restarted
+
+- name: Restart Windows event generator service
+  win_service:
+    name: "{{ te_axon_service_eg_name }}"
+    state: restarted

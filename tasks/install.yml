@@ -1,0 +1,57 @@
+---
+
+- name: Create staging path
+  tempfile:
+    state: directory
+    suffix: te_axon
+  register: staging
+
+- name: Stage agent package
+  copy:
+    src: "{{ te_axon_package_source }}"
+    dest: "{{ staging.path }}/{{ te_axon_package_source|basename }}"
+    mode: 0600
+
+- name: Stage agent EG package
+  copy:
+    src: "{{ te_axon_package_eg_source }}"
+    dest: "{{ staging.path }}/{{ te_axon_package_eg_source|basename }}"
+    mode: 0600
+
+- name: Stage agent EG driver package
+  copy:
+    src: "{{ te_axon_package_eg_driver_source }}"
+    dest: "{{ staging.path }}/{{ te_axon_package_eg_driver_source|basename }}"
+    mode: 0600
+
+- name: Install agent package
+  package:
+    name: "{{ staging.path }}/{{ te_axon_package_source|basename }}"
+    state: "{{ te_axon_package_state }}"
+
+- name: Install agent EG driver package
+  package:
+    name: "{{ staging.path }}/{{ te_axon_package_eg_driver_source|basename }}"
+    state: "{{ te_axon_package_eg_state }}"
+
+- name: Install agent EG package
+  package:
+    name: "{{ staging.path }}/{{ te_axon_package_eg_source|basename }}"
+    state: "{{ te_axon_package_eg_state }}"
+
+- name: Cleanup staging path
+  file:
+    path: "{{ staging.path }}"
+    state: absent
+
+- name: Create Ansible custom facts directory
+  file:
+    path: /etc/ansible/facts.d
+    state: directory
+    recurse: yes
+
+- name: Write custom fact
+  template:
+    src: te_axon.fact.j2
+    dest: /etc/ansible/facts.d/te_axon.fact
+    mode: 0700

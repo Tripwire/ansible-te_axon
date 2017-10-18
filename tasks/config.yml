@@ -1,0 +1,35 @@
+---
+
+- name: Write twagent.conf
+  template:
+    src: twagent.conf.j2
+    dest: "{{ te_axon_config_path }}/twagent.conf"
+  notify:
+    - Restart agent service
+
+- set_fact:
+    tag_metadata:
+      tagSets: "{{ te_axon_tags }}"
+  when: te_axon_tags is defined
+
+- name: Write agent tags
+  copy:
+    content: "{{ tag_metadata|to_yaml }}"
+    dest: "{{ te_axon_config_path }}/metadata.yml"
+  when: tag_metadata is defined
+  notify:
+    - Restart agent service
+
+- name: Write registration key
+  shell: echo {{ te_axon_registration_key|quote }} > {{ te_axon_config_path }}/{{ te_axon_registration_filename }}
+  args:
+    # actually created below
+    creates: "{{ te_axon_config_path }}/{{ te_axon_registration_filename }}.done"
+  when: te_axon_registration_key is defined
+  notify:
+    - Restart agent service
+
+- copy:
+    content: done
+    dest: "{{ te_axon_config_path }}/{{ te_axon_registration_filename }}.done"
+  when: te_axon_registration_key is defined

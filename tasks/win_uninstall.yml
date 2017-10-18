@@ -1,0 +1,8 @@
+---
+
+- name: Uninstall agent MSI package
+  win_package:
+    # fake path. not actually used, but required in ansible < 2.4
+    path: 'c:\temp\Axon_Agent.msi'
+    product_id: "{{ te_axon_package_name }}"
+    state: absent

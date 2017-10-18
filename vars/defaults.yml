@@ -1,0 +1,6 @@
+---
+te_axon_config_path: '/etc/tripwire'
+te_axon_package_name: axon-agent
+te_axon_package_eg_name: tw-eg-service
+te_axon_service_name: tripwire-axon-agent
+te_axon_service_eg_name: tw-eg-service

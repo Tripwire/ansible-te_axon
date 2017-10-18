@@ -1,0 +1,24 @@
+---
+
+- name: Create MSI staging path
+  win_tempfile:
+    state: directory
+    suffix: te_axon
+  register: staging
+
+- name: Stage Axon_Agent.msi
+  win_copy:
+    src: "{{ te_axon_package_source }}"
+    dest: '{{ staging.path }}\Axon_Agent.msi'
+
+- name: Install agent MSI package
+  win_package:
+    path: '{{ staging.path }}\Axon_Agent.msi'
+    product_id: "{{ te_axon_package_name }}"
+    state: "{{ te_axon_package_state }}"
+    creates_path: '{{ te_axon_package_install_path }}\twagent.exe'
+
+- name: Cleanup MSI staging path
+  win_file:
+    path: "{{ staging.path }}"
+    state: absent

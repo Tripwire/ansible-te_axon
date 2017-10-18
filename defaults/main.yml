@@ -1,0 +1,22 @@
+---
+te_axon_package_state: present
+te_axon_package_install_path: '/opt/tripwire'
+te_axon_package_eg_state: present
+te_axon_package_eg_driver_name: tw-eg-driver-dkms
+te_axon_dns_srvc_name: '_tw-agw'
+te_axon_dns_srvc_domain: ~
+te_axon_bridge_host: ~
+te_axon_bridge_port: 5670
+te_axon_registration_filename: 'registration_pre_shared_key.txt'
+te_axon_proxy_hostname: ~
+te_axon_proxy_port: ~
+te_axon_proxy_username: ~
+te_axon_proxy_password: ~
+te_axon_tls_version: ~
+te_axon_tls_cipher_suites: ~
+te_axon_logger_level: ~
+te_axon_spool_size: '1g'
+te_axon_service_state: started
+te_axon_service_enabled: true
+te_axon_service_eg_state: started
+te_axon_service_eg_enabled: true

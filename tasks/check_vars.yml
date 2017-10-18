@@ -1,0 +1,17 @@
+---
+
+- name: Check for te_axon_package_source
+  fail: msg='te_axon_package_source is not defined'
+  when: te_axon_package_source is not defined
+
+- name: Check for te_axon_package_eg_source
+  fail: msg='te_axon_package_eg_source is not defined'
+  when:
+  - te_axon_package_eg_source is not defined
+  - ansible_os_family != 'Windows'
+
+- name: Check for te_axon_package_eg_driver_source
+  fail: msg='te_axon_package_eg_driver_source is not defined'
+  when:
+  - te_axon_package_eg_driver_source is not defined
+  - ansible_os_family != 'Windows'

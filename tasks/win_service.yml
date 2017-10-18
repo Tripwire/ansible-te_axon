@@ -1,0 +1,13 @@
+---
+
+- name: Agent Windows service
+  win_service:
+    name: "{{ te_axon_service_name }}"
+    state: "{{ te_axon_service_state }}"
+    start_mode: "{{ te_axon_service_enabled|ternary('auto', 'manual') }}"
+
+- name: Event Generator Windows service
+  win_service:
+    name: "{{ te_axon_service_eg_name }}"
+    state: "{{ te_axon_service_eg_state }}"
+    start_mode: "{{ te_axon_service_eg_enabled|ternary('auto', 'manual') }}"

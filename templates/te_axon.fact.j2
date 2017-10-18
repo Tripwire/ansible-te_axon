@@ -1,0 +1,10 @@
+#!/bin/env python
+
+import json
+
+with open('{{ te_axon_package_install_path }}/agent/version') as f:
+    version = f.read()
+
+print json.dumps({
+    'version': '.'.join(version.split('=')[1].split('.')[:3])
+})

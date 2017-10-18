@@ -1,0 +1,36 @@
+---
+
+- name: (win) Write twagent.conf
+  win_template:
+    src: twagent.conf.j2
+    dest: "{{ te_axon_config_path }}/twagent.conf"
+    notify:
+      - Restart Windows agent service
+
+- set_fact:
+    tag_metadata:
+      tagSets: "{{ te_axon_tags }}"
+  when: te_axon_tags is defined
+
+- name: (win) Write agent tags
+  win_copy:
+    content: "{{ tag_metadata|to_yaml }}"
+    dest: "{{ te_axon_config_path }}/metadata.yml"
+  when: tag_metadata is defined
+  notify:
+    - Restart Windows agent service
+
+- name: (win) Write registration key
+  win_shell: echo {{ te_axon_registration_key|quote }} > {{ te_axon_config_path }}\{{ te_axon_registration_filename }}
+  args:
+    executable: cmd
+    # actually created below
+    creates: "{{ te_axon_config_path }}/{{ te_axon_registration_filename }}.done"
+  when: te_axon_registration_key is defined
+  notify:
+    - Restart Windows agent service
+
+- win_copy:
+    content: done
+    dest: "{{ te_axon_config_path }}/{{ te_axon_registration_filename }}.done"
+  when: te_axon_registration_key is defined

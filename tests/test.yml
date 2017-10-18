@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+     - role: te_axon
+       te_axon_package_source: /mnt/data/te_axon/linux/x86_64/axon-agent-installer-linux-x64.rpm
+       te_axon_package_eg_source: /mnt/data/te_axon/linux/x86_64/tw-eg-service-1.3.326-1.x86_64.rpm
+       te_axon_package_eg_driver_source: /mnt/data/te_axon/linux/x86_64/tw-eg-driver-rhel-1.3.313-1.x86_64.rpm
+       te_axon_package_eg_driver_name: tw-eg-driver-rhel
+       te_axon_registration_key: correct horse battery staple
+       te_axon_tags:
+         taga: [tag1]
+         tagb: [tag2, tag3]
+       te_axon_package_version: 3.6.0

@@ -1,0 +1,5 @@
+---
+te_axon_config_path: 'C:\ProgramData\Tripwire\Agent\config'
+te_axon_package_name: '{6AE2368F-20CD-42B3-B355-5092C00D70E2}'
+te_axon_service_name: TripwireAxonAgent
+te_axon_service_eg_name: TripwireEventGeneratorService

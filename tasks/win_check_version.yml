@@ -1,0 +1,12 @@
+---
+
+- name: Get version from registry
+  win_reg_stat:
+    path: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{{ te_axon_package_name }}
+    name: DisplayVersion
+  register: win_display_version
+
+- name: Set Windows installed version
+  set_fact:
+    te_axon_package_installed_version: "{{ win_display_version.value }}"
+  when: win_display_version.exists

@@ -1,0 +1,46 @@
+# Axon Agent configuration file
+# {{ ansible_managed }}
+
+# DNS SRV record options
+dns.service.name={{ te_axon_dns_srvc_name }}
+{% if te_axon_dns_srvc_domain %}
+dns.service.domain={{ te_axon_dns_srvc_domain }}
+{% endif %}
+{% if te_axon_bridge_host %}
+
+# Host-based agent configuration
+bridge.host={{ te_axon_bridge_host }}
+bridge.port={{ te_axon_bridge_port }}
+{% endif %}
+{% if te_axon_registration_key is defined %}
+
+# Bridge registration pre-shared key
+bridge.auth.mode=registration
+registration.file.name={{ te_axon_registration_filename }}
+{% endif %}
+{% if te_axon_proxy_hostname %}
+
+# Proxy settings
+socks5.host={{ te_axon_proxy_hostname }}
+socks5.port={{ te_axon_proxy_port }}
+socks5.user.name={{ te_axon_proxy_username }}
+socks5.user.password={{ te_axon_proxy_password }}
+{% endif %}
+{% if te_axon_tls_version %}
+
+# TLS version
+tls.version={{ te_axon_tls_version }}
+{% endif %}
+{% if te_axon_tls_cipher_suites %}
+
+# TLS cipher suites
+tls.cipher.suites={{ te_axon_tls_cipher_suites }}
+{% endif %}
+
+# The maximum size of the agent spool
+spool.size.max={{ te_axon_spool_size }}
+{% if te_axon_logger_level %}
+
+# Debugging - twagent
+log4cplus.logger.twagent={{ te_axon_logger_level }}
+{% endif %}

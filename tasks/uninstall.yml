@@ -1,0 +1,16 @@
+---
+
+- name: Uninstall agent package
+  package:
+    name: "{{ te_axon_package_name }}"
+    state: absent
+
+- name: Uninstall agent EG package
+  package:
+    name: "{{ te_axon_package_eg_name }}"
+    state: absent
+
+- name: Uninstall agent EG driver package
+  package:
+    name: "{{ te_axon_package_eg_driver_name }}"
+    state: absent

@@ -1,0 +1,11 @@
+---
+
+- name: Restart agent service
+  service:
+    name: "{{ te_axon_service_name }}"
+    state: restarted
+
+- name: Restart event generator service
+  service:
+    name: "{{ te_axon_service_eg_name }}"
+    state: restarted

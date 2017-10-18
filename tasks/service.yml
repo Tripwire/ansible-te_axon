@@ -1,0 +1,13 @@
+---
+
+- name: Agent service
+  service:
+    name: "{{ te_axon_service_name }}"
+    state: "{{ te_axon_service_state }}"
+    enabled: "{{ te_axon_service_enabled|ternary('yes', 'no') }}"
+
+- name: Event Generator service
+  service:
+    name: "{{ te_axon_service_eg_name }}"
+    state: "{{ te_axon_service_eg_state }}"
+    enabled: "{{ te_axon_service_eg_enabled|ternary('yes', 'no') }}"

@@ -1,0 +1,72 @@
+---
+
+- name: Gather OS Specific Variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+    - "defaults.yml"
+  tags: [always]
+
+# Awkward way to make a different OS default value while still allowing override
+- name: Fix Windows default install path
+  set_fact:
+    te_axon_package_install_path: 'C:\Program Files\Tripwire\Agent'
+  when:
+  - ansible_os_family == 'Windows'
+  - te_axon_package_install_path == '/opt/tripwire'
+  tags: [always]
+
+- include: check_vars.yml
+  tags: [always]
+
+- include: win_check_version.yml
+  when: ansible_os_family == 'Windows'
+  tags: [always]
+
+- include: uninstall.yml
+  when:
+  - ansible_os_family != 'Windows'
+  - te_axon_package_state == 'absent' or
+    (te_axon_package_version is defined and ansible_local is defined and ansible_local.te_axon is defined and te_axon_package_version != ansible_local.te_axon.version)
+  tags: [package]
+
+- include: win_uninstall.yml
+  when:
+  - ansible_os_family == 'Windows'
+  - te_axon_package_state == 'absent' or
+    (te_axon_package_version is defined and te_axon_package_installed_version is defined and te_axon_package_version != te_axon_package_installed_version)
+  tags: [package]
+
+- include: install.yml
+  when:
+  - ansible_os_family != 'Windows'
+  - te_axon_package_state == 'present'
+  - ansible_local is not defined or ansible_local.te_axon is not defined or
+    (te_axon_package_version is defined and te_axon_package_version != ansible_local.te_axon.version)
+  tags: [package]
+
+- include: win_install.yml
+  when:
+  - ansible_os_family == 'Windows'
+  - te_axon_package_state == 'present'
+  - te_axon_package_installed_version is not defined or
+    (te_axon_package_version is defined and te_axon_package_version != te_axon_package_installed_version)
+  tags: [package]
+
+- include: config.yml
+  when: ansible_os_family != 'Windows'
+  tags: [configure]
+
+- include: win_config.yml
+  when: ansible_os_family == 'Windows'
+  tags: [configure]
+
+- include: service.yml
+  when: ansible_os_family != 'Windows'
+  tags: [service]
+
+- include: win_service.yml
+  when: ansible_os_family == 'Windows'
+  tags: [service]

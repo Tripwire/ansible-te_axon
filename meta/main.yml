@@ -1,0 +1,31 @@
+galaxy_info:
+  author: Bob Thomas
+  description: Role to install and configure the Tripwire Axon agent
+  company: Tripwire, Inc
+
+  license: Apache 2.0
+
+  # this is mainly for Windows support. the Linux portion likely works on
+  # (untested) older versions
+  min_ansible_version: 2.3
+
+  #
+  # platforms is a list of platforms, and each platform has a name and a list of versions.
+  #
+  # platforms:
+  # - name: Fedora
+  #   versions:
+  #   - all
+  #   - 25
+  # - name: SomePlatform
+  #   versions:
+  #   - all
+  #   - 1.0
+  #   - 7
+  #   - 99.99
+
+  galaxy_tags:
+  - security
+  - monitoring
+
+dependencies: []
