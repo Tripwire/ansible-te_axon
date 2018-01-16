@@ -56,17 +56,25 @@
   tags: [package]
 
 - include: config.yml
-  when: ansible_os_family != 'Windows'
+  when:
+  - ansible_os_family != 'Windows'
+  - te_axon_package_state == 'present'
   tags: [configure]
 
 - include: win_config.yml
-  when: ansible_os_family == 'Windows'
+  when:
+  - ansible_os_family == 'Windows'
+  - te_axon_package_state == 'present'
   tags: [configure]
 
 - include: service.yml
-  when: ansible_os_family != 'Windows'
+  when:
+  - ansible_os_family != 'Windows'
+  - te_axon_package_state == 'present'
   tags: [service]
 
 - include: win_service.yml
-  when: ansible_os_family == 'Windows'
+  when:
+  - ansible_os_family == 'Windows'
+  - te_axon_package_state == 'present'
   tags: [service]
